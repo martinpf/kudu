@@ -19,6 +19,7 @@ namespace Kudu.Services.Web.Tracing
                 // Skip certain paths
                 if (httpContext.Request.RawUrl.EndsWith("favicon.ico", StringComparison.OrdinalIgnoreCase) ||
                     httpContext.Request.Path.StartsWith("/dump", StringComparison.OrdinalIgnoreCase) ||
+                    httpContext.Request.Path.StartsWith("/deployments/", StringComparison.OrdinalIgnoreCase) ||
                     httpContext.Request.RawUrl == "/")
                 {
                     return;
