@@ -148,7 +148,24 @@ namespace Kudu.TestHarness
             return matches[0].Groups[1].Value;
         }
 
+        static bool ErrorOccurred = false;
         public static void Run(string testName, Action<ApplicationManager> action)
+        {
+            // Don't do anything after the first failure
+            if (ErrorOccurred) return;
+
+            try
+            {
+                RunNoCatch(testName, action);
+            }
+            catch
+            {
+                ErrorOccurred = true;
+                throw;
+            }
+        }
+
+        public static void RunNoCatch(string testName, Action<ApplicationManager> action)
         {
             TestTracer.Trace("Running test - {0}", testName);
 
